@@ -1,0 +1,33 @@
+# Chainlit config for Aleem.
+# Full reference: https://docs.chainlit.io/backend/config/overview
+
+[project]
+# `enable_telemetry = false` — opt out of usage telemetry.
+enable_telemetry = false
+user_env = []
+session_timeout = 3600
+cache = false
+follow_symlink = false
+
+[features]
+# We render Markdown answers with inline citations; keep formatting on.
+prompt_playground = false
+unsafe_allow_html = false
+latex = false
+auto_tag_thread = false
+
+[features.spontaneous_file_upload]
+enabled = false
+
+[UI]
+name = "Aleem  ·  عليم"
+description = "Curriculum-grounded AI tutor for Saudi school students."
+default_collapse_content = true
+default_expand_messages = false
+hide_cot = true
+custom_css = "/public/stylesheet.css"
+logo_file_url = "/public/aleem-logo.svg"
+default_avatar_file_url = "/public/aleem-avatar.svg"
+
+[meta]
+generated_by = "aleem-build-task"

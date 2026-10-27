@@ -1,0 +1,84 @@
+{
+  "pages": [
+    {
+      "index": 0,
+      "markdown": "المملكة العربية السعودية\n\nوزارة التعليم\nMinistry of Education\n\nوزارة التعليم\nMinistry of Education\n\n# المهارات الحياتية والأسرية\n\n## الصف الخامس الابتدائي\n\n### قامَ بالتأليف والمراجعة\n### فريقٌ من المتخصصين\n\nطبعة ١٤٤٧ - ٢٠٢٥\n\nوزارة التعليم\nMinistry of Education\n2025 - 1447",
+      "images": [],
+      "dimensions": {
+        "dpi": 96,
+        "height": 1020,
+        "width": 850
+      },
+      "tables": [],
+      "hyperlinks": [],
+      "header": null,
+      "footer": null,
+      "confidence_scores": null
+    },
+    {
+      "index": 1,
+      "markdown": "المركز الوطني للمناهج، ١٤٤٦هـ\n\n# المركز الوطني للمناهج\n\n## المهارات الحياتية والأسرية - الصف الخامس الابتدائي - غير مجزأ.\n\nالمركز الوطني للمناهج. - الرياض، ١٤٤٦هـ\n\n٢١٠ ص : ٢٥,٥ × ٢١,٢١٠ سم\n\nرقم الإيداع : ١٦٧١٢ / ١٤٤٦\n\nردمك : ٩٧٨-٦٠٣-٨٥٣٣-١٥-٤\n\nحقوق الطبع والنشر محفوظة لوزارة التعليم\n\nwww.moe.gov.sa\n\n![img-0.jpeg](img-0.jpeg)\n\nأعزاءنا المعلمين والمعلمات، والطلاب والطالبات، وأولياء الأمور، وكل مهتم بالتربية والتعليم:\n\nيسعدنا تواصلكم؛ لتطوير الكتاب المدرسي، ومقترحاتكم محل اهتمامنا.\n\n![img-1.jpeg](img-1.jpeg)\n\nfb.ien.edu.sa\n\nوزارة التعليم\n\nMinistry of Education\n\n2025 - 1447",
+      "images": [
+        {
+          "id": "img-0.jpeg",
+          "top_left_x": 391,
+          "top_left_y": 617,
+          "bottom_right_x": 456,
+          "bottom_right_y": 678,
+          "image_base64": null,
+          "image_annotation": "{\n  \"description\": \"An image of a QR code.\",\n  \"kind\": \"QR code\"\n}"
+        },
+        {
+          "id": "img-1.jpeg",
+          "top_left_x": 393,
+          "top_left_y": 804,
+          "bottom_right_x": 456,
+          "bottom_right_y": 867,
+          "image_base64": null,
+          "image_annotation": "{\n  \"description\": \"An image of a QR code.\",\n  \"kind\": \"diagram\"\n}"
+        }
+      ],
+      "dimensions": {
+        "dpi": 96,
+        "height": 1020,
+        "width": 850
+      },
+      "tables": [],
+      "hyperlinks": [],
+      "header": null,
+      "footer": null,
+      "confidence_scores": null
+    },
+    {
+      "index": 2,
+      "markdown": "![img-2.jpeg](img-2.jpeg)\n\nوزارة التعليم\nMinistry of Education\n2025 - 1447",
+      "images": [
+        {
+          "id": "img-2.jpeg",
+          "top_left_x": 183,
+          "top_left_y": 393,
+          "bottom_right_x": 668,
+          "bottom_right_y": 596,
+          "image_base64": null,
+          "image_annotation": "{\"description\": \"The image shows Arabic calligraphy in green color.\", \"kind\": \"illustration\"}"
+        }
+      ],
+      "dimensions": {
+        "dpi": 96,
+        "height": 1020,
+        "width": 850
+      },
+      "tables": [],
+      "hyperlinks": [],
+      "header": null,
+      "footer": null,
+      "confidence_scores": null
+    }
+  ],
+  "model": "mistral-ocr-latest",
+  "usage_info": {
+    "pages_processed": 3,
+    "doc_size_bytes": 8860100
+  },
+  "document_annotation": null
+}

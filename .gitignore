@@ -1,0 +1,57 @@
+# Skills / agent harness artifacts (not part of the project)
+.agents/
+.claude/
+.files/
+skills-lock.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Model weights / caches
+models/
+.cache/
+.huggingface/
+
+# Chainlit auto-generated translation bundle — regenerated on first run
+src/ui/.chainlit/translations/
+
+# Stray Chainlit config dropped at repo root if anything imports chainlit
+# from CWD != src/ui/ (e.g. our smoke script imports it transitively via
+# src/ui/app.py). The legitimate config lives under src/ui/.chainlit/.
+/.chainlit/
+
+# Query logs (L18 — daily JSONL, recreated by runs)
+logs/
+
+# Local chat-history SQLite (Chainlit data layer — see src/ui/persistence.py)
+.aleem/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Textbooks and textbook-derived corpora / indexes
+/Data/
+/chroma/

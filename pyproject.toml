@@ -1,0 +1,85 @@
+[project]
+name = "aleem"
+version = "0.1.0"
+description = "Curriculum-grounded RAG tutor for Saudi school students. Answers come only from official Saudi Ministry of Education textbooks, with inline lesson-level citations."
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+license = { text = "Proprietary — academic / non-commercial use only" }
+
+# All deps are exact-pinned (==) so a Dockerfile or CI produces a byte-identical
+# environment. The lock file (uv.lock) captures full transitive resolution +
+# wheel hashes — that's the source of truth for `uv sync --frozen`.
+#
+# transformers is held at the latest 4.x (4.57.6) instead of 5.x because
+# Jina-v4's trust_remote_code model loader was written against the 4.x API
+# and is not yet verified on transformers 5.x.
+dependencies = [
+    # UI
+    "chainlit==2.11.1",
+    # Chat-history persistence — Chainlit's SQLAlchemyDataLayer backs the
+    # left sidebar / thread list / on_chat_resume hook. SQLite via the
+    # aiosqlite async driver; greenlet is SQLAlchemy's required runtime
+    # for async sessions on Python 3.11.
+    "sqlalchemy==2.0.36",
+    "aiosqlite==0.20.0",
+    "greenlet==3.1.1",
+    # Vector store
+    "chromadb==1.5.9",
+    # Embedding model stack (Jina-v4 via HuggingFace)
+    "transformers==4.57.6",
+    "torch==2.7.1",
+    # Jina-v4's processor pulls in transformers' AutoVideoProcessor which
+    # imports from torchvision — even though we never use the video path.
+    "torchvision==0.22.1",
+    "einops==0.8.2",
+    "peft==0.17.1",
+    "sentencepiece==0.2.1",
+    "accelerate==1.13.0",
+    "pillow==12.2.0",
+    # Config / env
+    "python-dotenv==1.2.2",
+    "pyyaml==6.0.3",
+    # Agentic pipeline — orchestration + LLM client + templating + retries.
+    # RESPONSE_WORKFLOW.md L3 (LLMClient), L8 (LangGraph), L13 (structured
+    # output), L19 (Jinja prompts), L20 (tenacity retry).
+    "langgraph==1.2.0",
+    "langchain-core==1.4.0",
+    "langchain-openai==1.2.1",
+    "jinja2==3.1.6",
+    "tenacity==9.1.4",
+    # OCR / ingestion — Mistral OCR API client. See OCR_implementation.md
+    # (D4: Files API upload + signed URL, D5: ocr.process with image
+    # annotation, D12: tenacity-wrapped retries).
+    "mistralai==2.4.5",
+]
+
+[tool.uv]
+# Aleem is an application, not an installable library — don't try to build
+# a wheel for it. `uv sync` will still create .venv and install all deps,
+# but it won't `pip install .` the project itself.
+package = false
+
+[dependency-groups]
+dev = [
+    "pytest==9.0.3",
+    "pytest-asyncio==1.3.0",
+    "ruff==0.15.13",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "-ra -q"
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = [".venv", "chroma", "logs", "Data"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]   # long lines OK — Jinja-rich code and bilingual strings
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B011"]   # asserts in tests are intentional

@@ -1,0 +1,48 @@
+/* Aleem — Chainlit UI overrides.
+ *
+ * Goals:
+ *  1. Load Arabic-friendly fonts (IBM Plex Sans Arabic, Cairo fallback).
+ *  2. Render messages with `unicode-bidi: plaintext` so Arabic flows RTL
+ *     and English flows LTR *automatically per message*, without forcing
+ *     the entire UI into RTL (which would mirror buttons, icons, and
+ *     scrollbars in ways the BUILD_SPEC §4.8 calls out as undesirable).
+ *  3. Keep the Latin-script chrome (settings panel, sidebar, buttons)
+ *     untouched and LTR.
+ *
+ * Loaded by Chainlit via `[UI].custom_css` in `.chainlit/config.toml`.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+
+:root {
+  --aleem-font-arabic: 'IBM Plex Sans Arabic', 'Cairo', system-ui, -apple-system,
+                       'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+
+body,
+.cl-chat-container,
+.cl-message,
+.cl-input,
+textarea,
+input {
+  font-family: var(--aleem-font-arabic);
+}
+
+/* Auto-direction: each block of text takes the direction of its first
+ * strong character. So an Arabic paragraph renders right-to-left, an
+ * English paragraph renders left-to-right, and a bilingual paragraph
+ * does the sane thing per run. No `dir="rtl"` on <body> needed. */
+.cl-message,
+.cl-message p,
+.cl-message li,
+.cl-message blockquote {
+  unicode-bidi: plaintext;
+  text-align: start;
+  line-height: 1.7;
+}
+
+/* Slightly more generous spacing for Arabic — diacritics + connected
+ * letterforms read better with more breathing room. */
+.cl-message p {
+  margin-block: 0.4em;
+}

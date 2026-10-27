@@ -1,0 +1,66 @@
+# Aleem — workflow-sandbox configuration.
+# Shape locked in RESPONSE_WORKFLOW.md L17 (base fields) and
+# docs/WORKFLOW_SANDBOX.md §8 (agent + verifier blocks). Secrets (API keys) live
+# in .env, NOT here.
+
+llm:
+  # backend: fake | openrouter | ollama   (one at a time)
+  # - "fake" returns canned strings — lets the graph run end-to-end with no
+  #   API key (Phase A milestone per L10). Switch to "openrouter" once you
+  #   have OPENROUTER_API_KEY in .env.
+  backend: openrouter
+
+  openrouter:
+    # NOTE: model MUST support function/tool calling for structured outputs
+    # (L13 intent classifier, L16 rewrite+language). Verify currency at
+    # https://openrouter.ai/api/v1/models — the free roster rotates.
+    # Other free tool-capable picks as of 2026-05:
+    #   qwen/qwen3-next-80b-a3b-instruct:free   (best Arabic of free tier)
+    #   openai/gpt-oss-120b:free                (largest free, slower)
+    #   google/gemma-4-31b-it:free              (mid-size, English-leaning)
+    model: gemini-3.1-pro-preview
+    base_url: https://openrouter.ai/api/v1
+    # api key read from OPENROUTER_API_KEY in .env
+
+  ollama:
+    # NOTE: model MUST support tool calling — llama3.1, qwen2.5, mistral-nemo
+    # all work; gemma2 does not. Pick later when local target is decided.
+    model: llama3.1:8b
+    base_url: http://localhost:11434
+
+  classifier_temperature: 0.0   # intent, self-check, decompose, rewrite
+  generation_temperature: 0.6   # final answer
+  max_tokens: 1024
+  timeout_seconds: 30
+
+# Cuttable nodes (BUILD_SPEC §8 Risk #4)
+features:
+  history_rewrite_enabled: true   # L7 — regex fallback for language if false
+  decomposition_enabled: true     # L4 — force [query] if false (no LLM call)
+
+# Retrieval (Turki's retrieve() per L2 + collaborator's reranker seam)
+retrieval:
+  top_k_retrieve: 20
+  top_k_rerank: 5
+  reranker_model: jinaai/jina-reranker-v2-base-multilingual  # spec §9 — v2/v3 TBC
+
+# History window for L7 rewrite node
+memory:
+  max_turns: 4
+
+# Ingestion knobs (OCR_implementation.md D11). MISTRAL_API_KEY lives in .env.
+ingestion:
+  embed_batch_size: 16   # lower to 8 on small GPUs (D11)
+  annotate_images: true  # D5/D7 — pass bbox_annotation_format so figures
+                         #          become retrievable as [Image: <annotation>]
+
+# Workflow-sandbox tool-calling agent (docs/WORKFLOW_SANDBOX.md §8).
+agent:
+  max_tool_calls: 4   # §3 ceiling. On hit → refuse with §3 shape using
+                      # already-retrieved chunks.
+
+# Topical verifier (docs/WORKFLOW_SANDBOX.md §4 / §8).
+verifier:
+  enabled: true       # §4 — default-on safety layer 3
+  model: ""           # empty → reuse llm.openrouter.model. Override with a
+                      # smaller / faster model id when you have one.

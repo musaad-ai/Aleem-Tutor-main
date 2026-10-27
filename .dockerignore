@@ -1,0 +1,71 @@
+# Keep the build context small and avoid leaking secrets / dev caches.
+# Mirrors .gitignore where it makes sense, with a few extras for Docker.
+# NOTE: chroma/, Data/, prompts/, and src/ui/.chainlit/config.toml are
+# intentionally NOT ignored — they're baked into the image for
+# reproducibility (see Dockerfile COPY lines).
+
+# VCS
+.git/
+.gitignore
+.gitattributes
+
+# Python build/cache artifacts
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Local model / hf caches (the container uses its own HF_HOME volume)
+models/
+.cache/
+.huggingface/
+
+# Local stateful dirs that should be host-mounted, not baked
+.aleem/
+logs/
+
+# Chainlit auto-generated bundles
+src/ui/.chainlit/translations/
+/.chainlit/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Skills / agent harness artifacts
+.agents/
+.claude/
+.files/
+skills-lock.json
+
+# Docs aren't needed in the runtime image — exclude the docs/ tree and
+# root-level markdown only. Do NOT use `*.md` here: it would match
+# `src/ui/chainlit.md`, the Chainlit welcome screen, at any depth.
+docs/
+/README.md
+/AGENTS.md
+/BUILD_SPEC.md
+/CLAUDE.md
+/SETUP.md
+
+# Plan/scratch
+plans/
